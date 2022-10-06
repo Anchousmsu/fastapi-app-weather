@@ -1,0 +1,9 @@
+psycopg2
+fastapi
+uvicorn
+pydantic
+python-dotenv
+urllib3
+requests
+certifi
+sqlalchemy
