@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 
-from models.weather import Weather
-from services.weather import WeatherService
+from models import Weather
+from services import WeatherService
 
 
 router = APIRouter(

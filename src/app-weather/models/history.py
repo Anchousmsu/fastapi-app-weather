@@ -1,18 +1,20 @@
 from pydantic import BaseModel
+from datetime import date
 from decimal import Decimal
 
 
-class WeatherBase(BaseModel):
+class HistoryBase(BaseModel):
+    date: date
     temp: Decimal
 
     class Config:
         orm_mode = True
 
 
-class Weather(WeatherBase):
+class History(HistoryBase):
     pass
 
 
-class WeatherWithID(WeatherBase):
+class HistoryWithID(HistoryBase):
     id: int
 

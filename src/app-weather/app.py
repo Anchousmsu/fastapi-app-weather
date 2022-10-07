@@ -9,10 +9,3 @@ Base.metadata.create_all(engine)
 
 app = FastAPI()
 app.include_router(router)
-
-
-@app.get('/history')
-def history():
-    return {
-        'date': 2
-    }
