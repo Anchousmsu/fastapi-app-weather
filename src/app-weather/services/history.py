@@ -2,10 +2,12 @@ from sqlalchemy.orm import Session
 from fastapi import Depends
 from decimal import Decimal
 from typing import List
+from sqlalchemy import func
 import requests
 
-from models import History
+from models import History, Weather
 from database import get_session
+import tables
 
 
 class HistoryService:
@@ -13,18 +15,22 @@ class HistoryService:
         self.session = session
 
     def get_history(self) -> List[History]:
-        # получить координаты, и потом по ним получать погоду
-        # res = requests.get(
-        #     "https://api.openweathermap.org/data/2.5/weather",
-        #     params={'lat': 55.7504461, 'lon': 37.6174943, 'appid': 'e4a6812d421ee6924022cc948e599203'}
-        # )
-        # temp = (
-        #         Decimal(res.json().get('main').get('temp'))
-        #         - CONST_KELVIN
-        # ).quantize(Decimal("1.00"))
-        # response = {
-        #     'temp': temp
-        # }
+        all_day = (
+            self.session
+            .query(tables.History.temp)
+            .all()
+        )
+        print(all_day)
+        day_weather = (
+            self.session
+            .query(
+                tables.DayWeather.date,
+                func.avg(tables.DayWeather.temp)
+            )
+            .group_by(tables.DayWeather.date)
+            .all()
+        )
+        print(day_weather)
         return [
             {
                 "date": "2022-10-01",

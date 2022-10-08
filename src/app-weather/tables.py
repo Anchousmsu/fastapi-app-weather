@@ -10,7 +10,7 @@ class DayWeather(Base):
 
     id = sa.Column(sa.Integer, primary_key=True)
     date = sa.Column(sa.Date)
-    time = sa.Column(sa.Time)
+    datetime = sa.Column(sa.DateTime)
     temp = sa.Column(sa.Numeric(4, 2))
 
 
