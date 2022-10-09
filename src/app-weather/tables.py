@@ -18,6 +18,6 @@ class History(Base):
     __tablename__ = 'history'
 
     id = sa.Column(sa.Integer, primary_key=True)
-    date = sa.Column(sa.Date)
+    date = sa.Column(sa.Date, unique=True)
     temp = sa.Column(sa.Numeric(4, 2))
 

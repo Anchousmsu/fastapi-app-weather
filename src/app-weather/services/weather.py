@@ -33,7 +33,6 @@ class WeatherService:
                 ).scalar_subquery()
             )
         )
-        self.session.commit()
         return last_record.first()
 
     def _get_openweathermap_res(self) -> Decimal:
@@ -61,7 +60,6 @@ class WeatherService:
             temp=temp
         )
         self.session.add(cur_weather)
-        self.session.commit()
 
     def get_weather(self) -> Weather:
         now = datetime.now()
@@ -74,5 +72,7 @@ class WeatherService:
 
         temp = self._get_openweathermap_res()
         self._add_new_temp_to_db(temp)
+
+        self.session.commit()
 
         return Weather(temp=temp)

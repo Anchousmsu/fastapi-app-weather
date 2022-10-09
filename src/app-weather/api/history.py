@@ -11,5 +11,5 @@ router = APIRouter(
 
 
 @router.get('/', response_model=List[History])
-def get_history(service: HistoryService = Depends()):
+async def get_history(service: HistoryService = Depends()):
     return service.get_history()
