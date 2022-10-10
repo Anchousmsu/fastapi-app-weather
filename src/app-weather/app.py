@@ -6,6 +6,8 @@ from services import TimeCheckerService
 from tables import Base
 from api import router
 
+ONE_HOUR = 60 * 60
+
 
 async def init_models():
     async with async_engine.begin() as conn:
@@ -16,15 +18,21 @@ app = FastAPI()
 app.include_router(router)
 
 
-@app.on_event("startup")
-async def startup_event():
-    while True:
-        async with async_session() as session:
-            await TimeCheckerService(session).time_write_to_db()
-        await asyncio.sleep(60)
+class BackgroundRunner:
+    def __init__(self):
+        self.value = 0
 
-#
-# @app.on_event("shutdown")
-# async def shutdown_event():
-#     await async_engine.dispose()
+    async def run_main(self):
+        while True:
+            async with async_session() as session:
+                await TimeCheckerService(session).time_write_to_db()
+            await asyncio.sleep(ONE_HOUR)
+
+
+runner = BackgroundRunner()
+
+
+@app.on_event('startup')
+async def app_startup():
+    asyncio.create_task(runner.run_main())
 
