@@ -11,4 +11,5 @@ router = APIRouter(
 
 @router.get('/', response_model=Weather)
 async def get_weather(service: WeatherService = Depends()):
-    return service.get_weather()
+    result = await service.get_weather()
+    return result

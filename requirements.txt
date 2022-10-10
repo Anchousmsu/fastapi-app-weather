@@ -1,9 +1,9 @@
-psycopg2
+asyncpg
 fastapi
 uvicorn
 pydantic
 python-dotenv
 urllib3
-requests
+aiohttp
 certifi
 sqlalchemy
